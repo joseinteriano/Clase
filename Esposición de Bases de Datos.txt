@@ -1,0 +1,68 @@
+CREATE TABLE cliente(
+    nombre VARCHAR(50),
+    apellido VARCHAR(50),
+    direccion VARCHAR(50),
+    ciudad VARCHAR(50),
+    pais VARCHAR(20),
+    fecha_de_nacimiento DATE
+)
+
+INSERT INTO cliente(nombre, apellido, direccion, ciudad, pais, fecha_de_nacimiento)
+VALUES('Juan', 'Martinez', 'Las colinas', 'Tegucigalpa', 'Honduras', '2003-04-03');
+
+INSERT INTO cliente(nombre, apellido, direccion, ciudad, pais, fecha_de_nacimiento)
+VALUES('Luis', 'Santos', 'Kennedy', 'Tegucigalpa', 'Honduras', '2001-04-03');
+
+INSERT INTO cliente(nombre, apellido, direccion, ciudad, pais, fecha_de_nacimiento)
+VALUES('Cesar', 'Moreno', 'Miraflores', 'Tegucigalpa', 'Honduras', '2000-04-03');
+
+INSERT INTO cliente(nombre, apellido, direccion, ciudad, pais, fecha_de_nacimiento)
+VALUES('Jonatan', 'Lopez', 'Las colinas', 'Tegucigalpa', 'Honduras', '2005-04-03');
+
+CREATE VIEW vista_cliente
+AS SELECT nombre, apellido, pais
+FROM cliente;
+
+
+CREATE TABLE informacion_tienda(
+    nombre_tienda VARCHAR(50),
+    ventas INT,
+    fecha_venta DATE
+);
+
+INSERT INTO informacion_tienda (nombre_tienda, ventas, fecha_venta)
+VALUES('Mercadito', 5000, '2010-02-03');
+
+INSERT INTO informacion_tienda (nombre_tienda, ventas, fecha_venta)
+VALUES('Panaderia', 2000, '2010-05-09');
+
+INSERT INTO informacion_tienda (nombre_tienda, ventas, fecha_venta)
+VALUES('Ferreteria', 1000, '2010-02-01');
+
+INSERT INTO informacion_tienda (nombre_tienda, ventas, fecha_venta)
+VALUES('Farmacia', 7000, '2010-02-05');
+
+
+CREATE TABLE ubicacion(
+    nombre_region VARCHAR(50),
+    nombre_tienda VARCHAR(50)
+)
+
+INSERT INTO ubicacion (nombre_region, nombre_tienda)
+VALUES('Este', 'Mercadito');
+
+INSERT INTO ubicacion (nombre_region, nombre_tienda)
+VALUES('Este', 'Panaderia');
+
+INSERT INTO ubicacion (nombre_region, nombre_tienda)
+VALUES('Oeste', 'Ferreteria');
+
+INSERT INTO ubicacion (nombre_region, nombre_tienda)
+VALUES('Oeste', 'Farmacia');
+
+
+CREATE VIEW vista_ventas_region
+AS SELECT A1.nombre_region nombre_region, SUM(A2.ventas) ventas
+FROM Ubicacion A1, Informacion_tienda A2
+WHERE A1.nombre_tienda = A2.nombre_tienda
+GROUP BY A1.nombre_region;
